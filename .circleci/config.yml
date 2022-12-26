@@ -19,7 +19,15 @@ jobs:
     steps:
       - print_pipeline_id
 
-
+  non-zero-job:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run:
+          command: return 1
+      - run:
+          command: echo "error handling command"
+          when: on_fail
 
 
   say-hello:
@@ -70,4 +78,7 @@ workflows:
     jobs:
       - my_job
 
-      - my_job
+  failure_workflow:
+    jobs:
+      - non-zero-job
+    
